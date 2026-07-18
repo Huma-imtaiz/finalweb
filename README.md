@@ -15,6 +15,19 @@ Built with React + Vite + Tailwind CSS + Framer Motion.
 - SEO: meta title/description/keywords, Open Graph, Twitter card, and
   JSON-LD structured data in `index.html`
 
+## Contact form setup
+
+The contact form delivers submissions via [Web3Forms](https://web3forms.com):
+
+1. Go to https://web3forms.com, enter your email, and click the confirmation
+   link you receive — this gives you a free access key instantly.
+2. Copy `.env.example` to `.env.local` and paste your key:
+   ```
+   VITE_WEB3FORMS_ACCESS_KEY=your-access-key-here
+   ```
+3. On Vercel, add the same variable under **Project Settings → Environment
+   Variables** so the deployed site can send submissions too.
+
 ## Run locally
 
 ```bash
@@ -49,8 +62,8 @@ git push -u origin main
 3. Build command: `npm run build` — Output directory: `dist` (both auto-detected).
 4. Click **Deploy**.
 
-No environment variables are required — the contact form opens the visitor's
-email client with a pre-filled message (`mailto:`) rather than calling a backend.
+Add `VITE_WEB3FORMS_ACCESS_KEY` under Project Settings → Environment
+Variables (see "Contact form setup" above) so submissions get delivered.
 
 ## Customizing
 

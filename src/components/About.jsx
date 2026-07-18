@@ -16,8 +16,8 @@ export default function About() {
 
       <Reveal>
         <p className="text-inkrose-500 dark:text-blush-100/70 leading-relaxed max-w-3xl">
-          I am Huma Imtiaz, a Data Science and AI Automation Specialist based in
-          Islamabad, Pakistan. I specialize in designing AI-powered applications,
+          I am Huma Imtiaz, a Data Science and AI Automation Specialist. I
+          specialize in designing AI-powered applications,
           business automation workflows, machine learning solutions, voice agents,
           data pipelines, and business intelligence dashboards.
         </p>
