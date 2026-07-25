@@ -12,7 +12,6 @@ import Projects from "./components/Projects.jsx";
 import Skills from "./components/Skills.jsx";
 import EducationWhy from "./components/EducationWhy.jsx";
 import Process from "./components/Process.jsx";
-import Testimonials from "./components/Testimonials.jsx";
 import FAQ from "./components/FAQ.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
@@ -33,7 +32,6 @@ export default function App() {
         <Skills />
         <EducationWhy />
         <Process />
-        <Testimonials />
         <FAQ />
         <Contact />
         <Footer />

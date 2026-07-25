@@ -6,13 +6,8 @@ import { SectionHeading, Reveal } from "./Shared.jsx";
 const faqs = [
   { q: "What type of businesses do you work with?", a: "I work with startups, agencies, professional service companies, customer support teams, recruitment businesses, automotive companies, and other organizations looking to improve their operations using AI, automation, and data." },
   { q: "What processes can you automate?", a: "I can automate client onboarding, lead management, CRM updates, appointment booking, reporting, notifications, document processing, customer support, data synchronization, and many other repetitive business processes." },
-  { q: "Which automation platforms do you use?", a: "I work with n8n, Make, Zapier, GoHighLevel, Vapi, webhooks, REST APIs, and custom Python solutions." },
   { q: "Can you build a custom AI chatbot?", a: "Yes. I can build AI assistants that answer customer questions or search internal business information using technologies such as OpenAI, LangChain, RAG, Pinecone, and private knowledge bases." },
-  { q: "Can you build an AI voice agent?", a: "Yes. I can create voice agents for lead qualification, customer support, appointment scheduling, and CRM data collection using Vapi and automation platforms." },
   { q: "Do you provide data science services?", a: "Yes. I provide data cleaning, analysis, predictive modeling, machine learning development, customer churn analysis, NLP solutions, and business intelligence dashboards." },
-  { q: "Can you integrate my existing business software?", a: "Yes. I can connect compatible platforms through REST APIs, webhooks, database integrations, and automation tools." },
-  { q: "Can you create business dashboards?", a: "Yes. I develop Power BI, Tableau, and Python-based dashboards for performance reporting, operational monitoring, financial trends, and customer analysis." },
-  { q: "Do you provide ongoing technical support?", a: "Ongoing support can be provided for workflow monitoring, troubleshooting, optimization, documentation, and future improvements." },
   { q: "Are you available for remote opportunities?", a: "Yes. I am available for remote AI automation, data science, technical integration, and DevOps-focused opportunities." },
 ];
 
@@ -54,7 +49,7 @@ export default function FAQ() {
 
   return (
     <section className="max-w-3xl mx-auto px-6 py-16 border-t border-blush-100 dark:border-blush-500/10">
-      <SectionHeading index="11" title="Frequently Asked Questions" />
+      <SectionHeading index="10" title="Frequently Asked Questions" />
       <Reveal>
         <div>
           {faqs.map((f, i) => (
