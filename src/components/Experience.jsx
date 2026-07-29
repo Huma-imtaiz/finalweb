@@ -62,7 +62,7 @@ const experience = [
 export default function Experience() {
   return (
     <section id="experience" className="max-w-4xl mx-auto px-6 py-16 border-t border-blush-100 dark:border-blush-500/10">
-      <SectionHeading index="04" title="Professional Experience" />
+      <SectionHeading index="03" title="Professional Experience" />
 
       <div className="relative pl-9">
         <div className="absolute left-[9px] top-2 bottom-2 w-[3px] bg-gradient-to-b from-blush-300 dark:from-blush-500/50 via-blush-200 dark:via-blush-500/20 to-transparent rounded-full" />

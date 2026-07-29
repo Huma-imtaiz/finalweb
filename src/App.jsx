@@ -6,13 +6,9 @@ import Hero from "./components/Hero.jsx";
 import BusinessValue from "./components/BusinessValue.jsx";
 import About from "./components/About.jsx";
 import Services from "./components/Services.jsx";
-import Results from "./components/Results.jsx";
 import Experience from "./components/Experience.jsx";
 import Projects from "./components/Projects.jsx";
 import Skills from "./components/Skills.jsx";
-import EducationWhy from "./components/EducationWhy.jsx";
-import Process from "./components/Process.jsx";
-import FAQ from "./components/FAQ.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
@@ -26,13 +22,9 @@ export default function App() {
         <BusinessValue />
         <About />
         <Services />
-        <Results />
         <Experience />
         <Projects />
         <Skills />
-        <EducationWhy />
-        <Process />
-        <FAQ />
         <Contact />
         <Footer />
       </div>

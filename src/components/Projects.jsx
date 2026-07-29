@@ -64,7 +64,7 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects" className="max-w-5xl mx-auto px-6 py-16 border-t border-blush-100 dark:border-blush-500/10">
-      <SectionHeading index="05" title="Featured Projects" />
+      <SectionHeading index="04" title="Featured Projects" />
       <div className="grid md:grid-cols-2 gap-5">
         {projects.map((p, i) => (
           <Reveal key={p.title} delay={i * 70}>

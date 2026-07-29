@@ -2,20 +2,16 @@ import React from "react";
 import { SectionHeading, Reveal, Chip } from "./Shared.jsx";
 
 const groups = [
-  { cat: "AI and Large Language Models", items: ["OpenAI API", "LangChain", "Retrieval-Augmented Generation", "Prompt Engineering", "Pinecone", "AI chatbots", "AI voice agents", "Knowledge assistants"] },
-  { cat: "Automation Platforms", items: ["n8n", "Make", "Zapier", "Vapi", "GoHighLevel", "Webhooks", "REST APIs"] },
-  { cat: "Programming", items: ["Python", "SQL", "Bash", "React"] },
-  { cat: "Machine Learning", items: ["scikit-learn", "XGBoost", "TensorFlow", "Classification", "CNNs", "Predictive modeling", "NLP"] },
-  { cat: "Data Analysis", items: ["Pandas", "NumPy", "Matplotlib", "Jupyter", "Data cleaning", "Data transformation", "Exploratory analysis"] },
-  { cat: "Business Intelligence", items: ["Power BI", "Tableau", "KPI dashboards", "Automated reporting", "Business trend analysis"] },
-  { cat: "Databases", items: ["PostgreSQL", "MySQL", "SQLite", "MongoDB", "Supabase"] },
-  { cat: "Development Tools", items: ["GitHub", "Git", "VS Code", "Jupyter Notebook", "Version control"] },
+  { cat: "AI & Automation", items: ["OpenAI API", "LangChain", "RAG", "n8n", "Make", "Vapi", "GoHighLevel"] },
+  { cat: "Machine Learning & Data", items: ["Python", "SQL", "scikit-learn", "XGBoost", "Pandas", "NumPy"] },
+  { cat: "Business Intelligence", items: ["Power BI", "Tableau", "KPI Dashboards"] },
+  { cat: "Tools & Infrastructure", items: ["PostgreSQL", "MongoDB", "REST APIs", "Git", "GitHub"] },
 ];
 
 export default function Skills() {
   return (
     <section id="skills" className="max-w-5xl mx-auto px-6 py-16 border-t border-blush-100 dark:border-blush-500/10">
-      <SectionHeading index="06" title="Technical Expertise" />
+      <SectionHeading index="05" title="Technical Expertise" />
       <div className="space-y-6">
         {groups.map((g, i) => (
           <Reveal key={g.cat} delay={i * 50}>
