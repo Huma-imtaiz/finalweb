@@ -1,5 +1,5 @@
 import React from "react";
-import { Bot, Car, BookOpenText, BarChart3, Wand2, LineChart, Webhook } from "lucide-react";
+import { Bot, Car, BookOpenText, BarChart3, Wand2, LineChart, Webhook, Mail, FolderKanban, UserPlus, Lock } from "lucide-react";
 import { SectionHeading, Reveal, Card } from "./Shared.jsx";
 
 const projects = [
@@ -37,11 +37,11 @@ const projects = [
   },
   {
     icon: Wand2,
-    title: "AI-Driven Recruitment Automation",
-    subtitle: "Smarter Candidate Screening and Hiring Workflows",
-    text: "Automated workflows for job distribution, candidate screening, and applicant evaluation, reducing repetitive recruitment tasks and organizing candidate information.",
-    tech: ["Automation", "AI screening"],
-    impact: ["Automated job distribution", "Candidate data collection", "AI-assisted screening", "Applicant evaluation", "Recruitment workflow notifications"],
+    title: "HR AI Job Posting & Evaluation",
+    subtitle: "Automated Resume Screening & Interview Scheduling",
+    text: "An end-to-end hiring automation that scores incoming candidates against the job description and CV, then automatically schedules screening interviews for the ones who qualify — removing manual resume screening from the hiring process.",
+    tech: ["n8n", "Airtable", "AI Scoring", "Google Calendar"],
+    impact: ["Removed manual resume screening", "Automated candidate scoring against job requirements", "Interviews auto-scheduled for qualified candidates", "Consistent, bias-reduced initial screening"],
   },
   {
     icon: LineChart,
@@ -58,6 +58,38 @@ const projects = [
     text: "Reusable workflow templates for common business processes, including payments, notifications, data transfers, and application integrations — built once, reused across projects.",
     tech: ["n8n", "Webhooks"],
     impact: ["Faster automation development", "Reliable reusable templates"],
+  },
+  {
+    icon: UserPlus,
+    title: "AI Lead Capture & Auto Follow-Up System",
+    subtitle: "Personalized Responses in Seconds, Not Hours",
+    text: "A lead-response system that reacts the moment a form is submitted — logging the lead, saving them as a contact in Airtable CRM, using Gemini AI to read their interests and draft a personalized follow-up, and notifying the sales rep with full context, all within seconds.",
+    tech: ["n8n", "Gemini AI", "Airtable", "Gmail", "Google Sheets"],
+    impact: ["Lead response time cut from hours to seconds", "Personalized, non-generic follow-up emails", "Automatic CRM contact creation", "Sales rep notified instantly with full lead context"],
+  },
+  {
+    icon: Mail,
+    title: "AI Client Onboarding System (n8n)",
+    subtitle: "Automated Welcome Emails & CRM Logging",
+    text: "An onboarding system that triggers the moment a client submits a form. Two AI agents fire simultaneously — one drafts and sends a personalized welcome email via Gmail, the other logs all client data to Google Sheets — removing manual follow-up entirely.",
+    tech: ["n8n", "OpenAI", "Gmail", "Google Sheets"],
+    impact: ["Zero manual work after setup", "Personalized welcome email sent instantly", "All client data automatically logged", "Faster, more consistent client experience"],
+  },
+  {
+    icon: FolderKanban,
+    title: "AI Client Onboarding Automation (Make.com)",
+    subtitle: "From Form Submission to Kickoff in 30 Seconds",
+    text: "A single Google Form submission triggers a full onboarding chain: an AI-generated project brief, auto-created Drive folders and docs, a Trello board with phase lists and starter cards, a Slack notification to the team, a personalized welcome email, and an auto-scheduled kickoff call.",
+    tech: ["Make.com", "OpenRouter", "Google Drive", "Trello", "Slack", "Google Calendar"],
+    impact: ["Onboarding time cut from 30-60 minutes to ~30 seconds", "Zero manual setup work", "Consistent, error-free project structure every time", "Team notified and kickoff scheduled automatically"],
+  },
+  {
+    icon: Lock,
+    title: "Enterprise CRM Automation",
+    subtitle: "Details Protected Under NDA",
+    text: "A custom CRM automation project built for a client under a signed non-disclosure agreement. Specific implementation details, tools, and outcomes cannot be publicly shared.",
+    tech: ["CRM", "API Integrations", "Automation"],
+    impact: ["Details available upon request (subject to NDA)"],
   },
 ];
 
