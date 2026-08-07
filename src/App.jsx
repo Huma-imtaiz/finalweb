@@ -48,10 +48,14 @@ const projects = [
 ];
 
 const toolGroups = [
-  { name: "AI & LLM", color: "#2c9df4", tools: ["OpenAI", "Gemini", "LangChain", "RAG", "Prompt engineering"] },
-  { name: "Automation", color: "#f5c948", tools: ["n8n", "Make.com", "Vapi", "GoHighLevel", "Zapier", "Webhooks"] },
-  { name: "Data", color: "#86d45e", tools: ["Python", "SQL", "Pandas", "NumPy", "XGBoost", "scikit-learn"] },
-  { name: "BI & systems", color: "#ff6b5d", tools: ["Power BI", "Tableau", "REST APIs", "PostgreSQL", "MongoDB", "GitHub"] },
+  { name: "AI & LLM", color: "#2c9df4", tools: ["OpenAI", "GPT", "Gemini", "Claude", "Llama", "Prompt engineering", "Tool calling"] },
+  { name: "Agents & retrieval", color: "#f1d900", tools: ["RAG pipelines", "LangChain", "LangGraph", "Langflow", "Ollama", "Qdrant", "Sub-agents", "MCP", "Vector search"] },
+  { name: "Automation", color: "#c8a7e8", tools: ["n8n", "Make.com", "Vapi", "GoHighLevel", "Zapier", "Webhooks", "Connectors", "Workflow automation"] },
+  { name: "Languages & data", color: "#86d45e", tools: ["Python", "JavaScript", "TypeScript", "SQL", "Pandas", "NumPy", "XGBoost", "scikit-learn"] },
+  { name: "Backend & cloud", color: "#ff6b5d", tools: ["FastAPI", "Node.js", "REST APIs", "WebSockets", "Firebase", "PostgreSQL", "MongoDB", "Google Cloud", "Vercel"] },
+  { name: "Frontend", color: "#f1d900", tools: ["React", "Next.js", "Vite", "Tailwind CSS", "Framer Motion", "GSAP", "Three.js"] },
+  { name: "BI & ops", color: "#2c9df4", tools: ["Power BI", "Tableau", "Git", "GitHub", "GitHub Actions", "Domains & DNS", "Search Console"] },
+  { name: "AI coding", color: "#f57962", tools: ["Claude Code", "Codex", "Antigravity", "Canva", "Technical documentation"] },
 ];
 
 const experience = [
@@ -180,6 +184,13 @@ function Intro() {
   </section>;
 }
 
+function MethodStation({ step, index, progress }) {
+  const start = index * .17;
+  const opacity = useTransform(progress, [start, start + .12], [.18, 1]);
+  const scale = useTransform(progress, [start, start + .12], [.82, 1]);
+  return <div className={`station s${index}`}><motion.div className="station-pill" style={{ opacity, scale }}><b>{step[0]} · {step[1]}</b><small>{step[2]}</small></motion.div></div>;
+}
+
 function Method() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -200,7 +211,7 @@ function Method() {
           <path d="M90 140C190 140 230 380 330 380S500 140 600 140 770 380 870 380 1010 140 1110 140" stroke="#33372f" strokeWidth="10" strokeLinecap="round"/>
           <motion.path d="M90 140C190 140 230 380 330 380S500 140 600 140 770 380 870 380 1010 140 1110 140" stroke="var(--grass)" strokeWidth="10" strokeLinecap="round" style={{ pathLength }}/>
         </svg>
-        {steps.map((step, i) => <motion.div className={`station s${i}`} key={step[0]} initial={{ opacity: .2, scale: .8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * .06 }}><b>{step[0]} · {step[1]}</b><small>{step[2]}</small></motion.div>)}
+        {steps.map((step, i) => <MethodStation step={step} index={i} progress={scrollYProgress} key={step[0]}/>)}
       </div>
       <div className="method-tools">{["n8n · WORKFLOWS", "MAKE.COM · SCENARIOS", "OPENAI · AGENTS", "PYTHON · DATA", "VAPI · VOICE"].map((item) => <span key={item}><i/>{item}</span>)}</div>
     </div>
@@ -208,13 +219,18 @@ function Method() {
 }
 
 function Work() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const workX = useTransform(scrollYProgress, [0, 1], ["-4%", "-24%"]);
+  const projectsX = useTransform(scrollYProgress, [0, 1], ["-28%", "-5%"]);
+  const buildX = useTransform(scrollYProgress, [0, 1], ["-8%", "-34%"]);
   const loop = [...projects, ...projects];
-  return <section id="work" className="work">
-    <div className="type-wall" aria-hidden="true"><span>WORK WORK WORK WORK</span><span>PROJECTS PROJECTS PROJECTS</span><span>BUILD BUILD BUILD BUILD</span></div>
+  return <section id="work" className="work" ref={ref}>
+    <div className="type-wall" aria-hidden="true"><motion.span style={{ x: workX }}>WORK WORK WORK WORK</motion.span><motion.span style={{ x: projectsX }}>PROJECTS PROJECTS PROJECTS</motion.span><motion.span style={{ x: buildX }}>BUILD BUILD BUILD BUILD</motion.span></div>
     <div className="work-label"><i/>THE WORK · 6 FEATURED BUILDS</div>
     <div className="work-slider">
       <div className="work-track">
-        {loop.map((project, i) => <article className="work-card" key={`${project.type}-${i}`}>
+        {loop.map((project, i) => <article className="work-card" style={{ "--project": project.color }} key={`${project.type}-${i}`}>
           <WorkflowArt type={project.type}/>
           <div className="work-card-copy"><div><h3>{project.title}</h3><p>{project.short}</p></div><span>{project.tools}</span></div>
         </article>)}
