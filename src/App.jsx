@@ -1,166 +1,104 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import {
-  ArrowDownRight, ArrowUpRight, Github, Linkedin, Mail, Menu, Phone, X,
-  Bot, Car, BookOpenText, BarChart3, Wand2, LineChart, Webhook, UserPlus,
-  FolderKanban, Lock,
-} from "lucide-react";
+import { Github, Linkedin, Mail, Menu, Phone, X } from "lucide-react";
 
 const projects = [
   {
-    no: "01",
-    title: "AI Voice Agent",
-    subtitle: "Automated Customer Conversations at Scale",
-    blurb: "Conversational AI voice agents for customer service, appointment scheduling, and lead qualification — designed to interact naturally, collect relevant information, and pass structured data into business systems.",
-    tools: "Vapi · n8n · Webhooks · REST APIs · CRM",
-    tone: "coral",
-    status: "Freelance",
-    Icon: Bot,
-  },
-  {
-    no: "02",
-    title: "Automotive AI Customer Support Bot",
-    subtitle: "Voice & Text Sales Automation",
-    blurb: "An end-to-end AI sales assistant for an automotive business that communicates through voice and text, qualifies requirements, schedules appointments, and updates CRM records automatically.",
-    tools: "Vapi · n8n · CRM",
-    tone: "sky",
-    status: "Delivered",
-    Icon: Car,
-  },
-  {
-    no: "03",
-    title: "RAG Business Knowledge Assistant",
-    subtitle: "Instant Answers From Internal Documents",
-    blurb: "An internal AI assistant that lets teams search and question more than 500 business documents through natural language, using retrieval-augmented generation to ground every response.",
-    tools: "LangChain · OpenAI · Pinecone · Python",
-    tone: "grass",
-    status: "Delivered",
-    Icon: BookOpenText,
-  },
-  {
-    no: "04",
-    title: "Automated Business Intelligence Dashboard",
-    subtitle: "Real-Time Insights for Startups & SMEs",
-    blurb: "A Python-powered data aggregation and visualization solution collecting information from news, social media, financial, and business sources, transformed into clear market and financial insight.",
-    tools: "Python · Data aggregation · Visualization",
-    tone: "sun",
-    status: "Delivered",
-    Icon: BarChart3,
-  },
-  {
-    no: "05",
     title: "HR AI Job Posting & Evaluation",
-    subtitle: "Automated Resume Screening & Scheduling",
-    blurb: "An end-to-end hiring automation that scores incoming candidates against the job description and CV, then automatically schedules screening interviews for the ones who qualify.",
-    tools: "n8n · Airtable · AI scoring · Google Calendar",
-    tone: "cream",
-    status: "Delivered",
-    Icon: Wand2,
+    short: "Scores candidates against the role, shortlists the best fits, and schedules screening interviews.",
+    tools: "n8n · Airtable · AI scoring · Calendar",
+    type: "hr",
+    color: "#f57962",
   },
   {
-    no: "06",
-    title: "Customer Churn Prediction Dashboard",
-    subtitle: "Identifying Customers at Risk of Leaving",
-    blurb: "A machine learning system trained on roughly 100,000 telecom records. The XGBoost model predicted churn with 91% accuracy, paired with an interactive Tableau dashboard supporting retention strategy.",
-    tools: "Python · XGBoost · Pandas · Tableau",
-    tone: "lilac",
-    status: "Delivered",
-    Icon: LineChart,
+    title: "Client Onboarding on Make.com",
+    short: "Turns one form into a brief, Drive workspace, Trello board, Slack alert, email, and kickoff call.",
+    tools: "Make.com · Drive · Trello · Slack",
+    type: "make",
+    color: "#9dcced",
   },
   {
-    no: "07",
-    title: "n8n & Webhooks Toolkit",
-    subtitle: "Reusable Automation Components",
-    blurb: "Reusable workflow templates for common business processes — payments, notifications, data transfers, and application integrations — built once and reused across client projects.",
-    tools: "n8n · Webhooks",
-    tone: "rose",
-    status: "Reusable",
-    Icon: Webhook,
+    title: "AI Lead Capture & Follow-Up",
+    short: "Creates the CRM contact, writes a personalized response with Gemini, and alerts sales instantly.",
+    tools: "n8n · Gemini · Airtable · Gmail",
+    type: "lead",
+    color: "#b9dc52",
   },
   {
-    no: "08",
-    title: "AI Lead Capture & Auto Follow-Up",
-    subtitle: "Personalized Responses in Seconds, Not Hours",
-    blurb: "A lead-response system that fires the moment a form is submitted — logging the lead in Airtable, using Gemini to draft a personalized follow-up, and alerting the sales rep with full context.",
-    tools: "n8n · Gemini · Airtable · Gmail · Sheets",
-    tone: "teal",
-    status: "Delivered",
-    Icon: UserPlus,
-  },
-  {
-    no: "09",
     title: "AI Client Onboarding System",
-    subtitle: "Automated Welcome Emails & CRM Logging",
-    blurb: "An onboarding system that triggers the moment a client submits a form. Two AI agents fire in parallel — one sends a personalized welcome email, the other logs every detail to Google Sheets.",
+    short: "Two AI agents send a tailored welcome email and log every client detail in parallel.",
     tools: "n8n · OpenAI · Gmail · Sheets",
-    tone: "coral",
-    status: "Delivered",
-    Icon: Mail,
+    type: "onboarding",
+    color: "#f5c948",
   },
   {
-    no: "10",
-    title: "AI Client Onboarding Automation",
-    subtitle: "Form Submission to Kickoff in 30 Seconds",
-    blurb: "A single Google Form submission triggers a full onboarding chain: an AI-generated brief, Drive folders, a Trello board, a Slack alert, a welcome email, and an auto-scheduled kickoff call.",
-    tools: "Make · OpenRouter · Drive · Trello · Slack",
-    tone: "sky",
-    status: "Delivered",
-    Icon: FolderKanban,
+    title: "RAG Knowledge Assistant",
+    short: "Lets teams search and question 500+ internal documents using grounded natural-language answers.",
+    tools: "LangChain · OpenAI · Pinecone · Python",
+    type: "rag",
+    color: "#cdb9e7",
   },
   {
-    no: "11",
-    title: "Enterprise CRM Automation",
-    subtitle: "Details Protected Under NDA",
-    blurb: "A custom CRM automation project built for a client under a signed non-disclosure agreement. Specific implementation details, tools, and outcomes are shared on request only.",
-    tools: "CRM · API integrations · Automation",
-    tone: "grass",
-    status: "NDA",
-    Icon: Lock,
+    title: "Customer Churn Intelligence",
+    short: "A 91%-accuracy XGBoost model and Tableau dashboard built on 100K+ telecom records.",
+    tools: "Python · XGBoost · Pandas · Tableau",
+    type: "data",
+    color: "#7cc9bd",
   },
 ];
 
-const skills = [
-  ["AI & automation", "OpenAI API, LangChain, RAG, n8n, Make, Vapi, GoHighLevel"],
-  ["Data & machine learning", "Python, SQL, scikit-learn, XGBoost, Pandas, NumPy"],
-  ["Business intelligence", "Power BI, Tableau, KPI dashboards, data pipelines"],
-  ["Systems", "REST APIs, webhooks, PostgreSQL, MongoDB, Git, GitHub"],
+const toolGroups = [
+  { name: "AI & LLM", color: "#2c9df4", tools: ["OpenAI", "Gemini", "LangChain", "RAG", "Prompt engineering"] },
+  { name: "Automation", color: "#f5c948", tools: ["n8n", "Make.com", "Vapi", "GoHighLevel", "Zapier", "Webhooks"] },
+  { name: "Data", color: "#86d45e", tools: ["Python", "SQL", "Pandas", "NumPy", "XGBoost", "scikit-learn"] },
+  { name: "BI & systems", color: "#ff6b5d", tools: ["Power BI", "Tableau", "REST APIs", "PostgreSQL", "MongoDB", "GitHub"] },
 ];
 
 const experience = [
-  ["2025 — 2026", "Agentic AI Developer", "Bitzsol Digital", "Built autonomous, tool-using AI agents, RAG systems, and connected CRM workflows."],
-  ["2025", "AI Automation Specialist", "Oraion · Remote", "Delivered n8n and Make workflows, voice AI, internal knowledge assistants, and BI reporting."],
-  ["2024 — 2025", "Virtual Assistant", "NSOL", "Managed GoHighLevel pipelines, automations, lead generation, and digital operations."],
-  ["2024", "Data Analyst", "Goldbar Tech", "Prepared 200K+ row datasets and built an XGBoost churn model with 91% accuracy."],
+  {
+    role: "Data Analyst",
+    company: "Goldbar Tech",
+    place: "Rawalpindi · On-site",
+    date: "2024",
+    note: "Cleaned 200K+ rows and built a 91%-accuracy customer churn model.",
+    color: "#9dcced",
+  },
+  {
+    role: "Virtual Assistant",
+    company: "NSOL",
+    place: "Rawalpindi · On-site",
+    date: "2024 — 2025",
+    note: "Managed GoHighLevel pipelines, automations, lead generation, and digital operations.",
+    color: "#f5c948",
+  },
+  {
+    role: "AI Automation Specialist",
+    company: "Oraion",
+    place: "Ireland · Remote",
+    date: "2025",
+    note: "Delivered n8n and Make workflows, voice AI, RAG assistants, and BI reporting.",
+    color: "#f57962",
+  },
+  {
+    role: "Agentic AI Developer",
+    company: "Bitzsol Digital",
+    place: "Rawalpindi · Hybrid",
+    date: "2025 — 2026",
+    note: "Built tool-using AI agents, RAG systems, and connected CRM workflows.",
+    color: "#ffffff",
+  },
+  {
+    role: "CRM Automation Specialist",
+    company: "Open to the next team",
+    place: "Islamabad or worldwide · Remote",
+    date: "NOW",
+    note: "Ready to build practical AI, CRM, and operations systems that create measurable value.",
+    color: "#cdb9e7",
+  },
 ];
 
-// Real, measurable outcomes — replaces a "competition/awards" band with results from actual client work.
-const highlights = [
-  ["2025", "60% reduction", "Client onboarding automation cut manual processing time at Oraion."],
-  ["2025", "500+ documents", "RAG assistant let teams query internal knowledge in natural language."],
-  ["2025", "35% faster", "Vapi voice AI cut average customer support call handling time."],
-  ["2025", "30 seconds", "Make.com onboarding chain replaced a 30–60 minute manual process."],
-  ["2025", "78% accuracy", "Automotive AI sales bot qualified leads in under 2 minutes."],
-  ["2024", "91% accuracy", "XGBoost churn model trained on 100K+ telecom records at Goldbar Tech."],
-];
-
-const tickerItems = [
-  "AI AUTOMATION", "DATA SCIENCE", "WORKFLOW ENGINEERING",
-  "MACHINE LEARNING", "BUSINESS INTELLIGENCE", "PAKISTAN & REMOTE", "11 PROJECTS SHIPPED",
-];
-
-function Wave({ fill = "var(--cream)", className = "" }) {
-  return <svg className={`wave ${className}`} viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90 L0 52 C120 12 240 12 360 44 C480 76 600 76 720 44 C840 12 960 12 1080 44 C1200 76 1320 76 1440 48 L1440 90Z" fill={fill}/></svg>;
-}
-
-function Marquee() {
-  const loop = [...tickerItems, ...tickerItems];
-  return (
-    <div className="marquee" aria-hidden="true">
-      <div className="marquee-track">
-        {loop.map((t, i) => <span key={`${t}-${i}`}>{t}<i/></span>)}
-      </div>
-    </div>
-  );
+function Wave({ fill = "var(--cream)", flip = false }) {
+  return <svg className={`wave ${flip ? "flip" : ""}`} viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90V54C150 7 260 12 385 46c132 36 255 37 390 0 172-47 284-45 410-7 96 29 171 23 255 2v49Z" fill={fill}/></svg>;
 }
 
 function Nav() {
@@ -168,127 +106,182 @@ function Nav() {
   return <header className="nav">
     <a href="#top" className="brand">HUMA IMTIAZ</a>
     <nav className={open ? "nav-links open" : "nav-links"} aria-label="Site navigation">
-      {["work", "method", "skills", "about", "contact"].map(x => <a key={x} href={`#${x}`} onClick={() => setOpen(false)}>{x}</a>)}
+      {["work", "method", "toolbox", "experience", "about", "contact"].map((item) => (
+        <a key={item} href={`#${item}`} onClick={() => setOpen(false)}>{item}</a>
+      ))}
     </nav>
     <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X/> : <Menu/>}</button>
   </header>;
 }
 
+function WorkflowArt({ type }) {
+  const maps = {
+    hr: ["Form", "CV", "AI score", "Shortlist", "Calendar"],
+    make: ["Form", "Brief", "Drive", "Trello", "Slack", "Meet"],
+    lead: ["Sheets", "Airtable", "Gemini", "Parse", "Gmail"],
+    onboarding: ["Form", "AI Agent", "OpenAI", "Gmail", "Sheets"],
+    rag: ["Docs", "Chunk", "Vector DB", "LLM", "Answer"],
+    data: ["100K rows", "Clean", "XGBoost", "91%", "Tableau"],
+  };
+  const labels = maps[type];
+  return <div className={`workflow-art art-${type}`}>
+    <div className="art-toolbar"><span/><span/><span/><em>{type === "make" ? "MAKE.COM SCENARIO" : "N8N WORKFLOW"}</em></div>
+    <div className="art-grid"/>
+    <div className="art-nodes">
+      {labels.map((label, i) => <React.Fragment key={label}>
+        <motion.div className="art-node" initial={{ scale: .6, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * .06 }}>
+          <b>{label.slice(0, 1)}</b><small>{label}</small>
+        </motion.div>
+        {i < labels.length - 1 && (
+          <motion.i initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: .05 + i * .06 }}/>
+        )}
+      </React.Fragment>)}
+    </div>
+  </div>;
+}
+
 function Hero() {
   const { scrollYProgress } = useScroll();
-  const rotate = useTransform(scrollYProgress, [0, .22], [0, 110]);
-  const smoothRotate = useSpring(rotate, { stiffness: 70, damping: 20 });
+  const rotation = useSpring(useTransform(scrollYProgress, [0, .18], [0, 105]), { stiffness: 65, damping: 20 });
   const deck = [...projects, ...projects];
-  const step = 360 / deck.length;
   return <section id="top" className="hero">
     <div className="hero-copy">
-      <motion.h1 initial={{ y: 110 }} animate={{ y: 0 }} transition={{ duration: .95, ease: [0.2,.8,.2,1] }}>HUMA&nbsp; IMTIAZ</motion.h1>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .55 }}>AI automation specialist & data science engineer</motion.p>
-      <motion.small initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .75 }}>Intelligent systems that move business forward</motion.small>
+      <div className="hero-name-mask"><motion.h1 initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ duration: .9, ease: [.2,.8,.2,1] }}>HUMA IMTIAZ</motion.h1></div>
+      <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .52 }}>AI automation specialist & data science engineer</motion.p>
+      <motion.small initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .72 }}>Intelligent systems that move business forward</motion.small>
     </div>
-    <div className="deck" aria-hidden="true">
-      <motion.div className="deck-ring" style={{ rotate: smoothRotate }}>
-        {deck.map((p, i) => (
-          <div className={`deck-card tone-${p.tone}`} style={{ "--angle": `${i * step}deg` }} key={`${p.no}-${i}`}>
-            <p.Icon size={28} strokeWidth={1.6} />
-          </div>
-        ))}
+    <div className="hero-deck" aria-hidden="true">
+      <motion.div className="hero-ring" style={{ rotate: rotation }}>
+        {deck.map((project, i) => <div className="hero-card" style={{ "--a": `${i * (360 / deck.length)}deg`, "--card-color": project.color }} key={`${project.type}-${i}`}>
+          <WorkflowArt type={project.type}/>
+        </div>)}
       </motion.div>
     </div>
-    <div className="hero-count">11 builds · AI, automation & data</div>
+    <span className="scroll-cue">Scroll to explore <i/></span>
+  </section>;
+}
+
+function Intro() {
+  return <section className="intro wrap">
+    <p className="eyebrow"><i/>AI AUTOMATION · DATA SCIENCE · ISLAMABAD & REMOTE</p>
+    <motion.h2 initial={{ opacity: 0, y: 55 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .35 }}>I build AI systems that turn slow, repetitive processes into reliable operations.</motion.h2>
+    <div className="cta-row">
+      <a className="pill primary" href="#work"><span>See the work</span><i/></a>
+      <a className="pill secondary" href="#method"><span>How I ship</span><i/></a>
+    </div>
+    <div className="stats">
+      {[["60%", "less manual processing", "#86d45e"], ["500+", "documents searchable with RAG", "#2c9df4"], ["91%", "churn prediction accuracy", "#ff6b5d"]].map((stat, i) => (
+        <motion.div key={stat[0]} initial={{ opacity: 0, y: 45 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .12 }}>
+          <span className="stat-ring" style={{ "--ring": stat[2] }}><strong>{stat[0]}</strong><svg viewBox="0 0 220 150" preserveAspectRatio="none"><motion.path d="M30 96C12 62 44 22 106 16c62-6 102 24 100 58-2 36-50 62-106 60-48-2-78-20-74-46 3-18 18-30 36-34" fill="none" stroke="var(--ring)" strokeWidth="7" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.1, delay: .2 + i * .12 }}/></svg></span>
+          <p>{stat[1]}</p>
+        </motion.div>
+      ))}
+    </div>
   </section>;
 }
 
 function Method() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const path = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
-  return <section id="method" ref={ref} className="method">
+  const pathLength = useSpring(scrollYProgress, { stiffness: 85, damping: 24 });
+  const steps = [
+    ["1", "Brief", "Requirements, and the taste bar"],
+    ["2", "Spec", "Architecture, data model, constraints"],
+    ["3", "Build", "Implementation, AI-assisted"],
+    ["4", "Review", "Read the diff, run it, fix it"],
+    ["5", "Ship", "Deploy, domain, DNS, indexing"],
+  ];
+  return <section id="method" className="method" ref={ref}>
     <div className="method-sticky wrap">
-      <p className="eyebrow light"><i/>HOW I BUILD</p>
-      <h2>I use AI to move fast. Nothing ships until it is tested, understood, and useful.</h2>
+      <p className="eyebrow light"><i/>HOW I SHIP</p>
+      <h2>I build with AI. Nothing ships that I haven’t read, run, and understood.</h2>
       <div className="road">
         <svg viewBox="0 0 1200 520" preserveAspectRatio="none" fill="none">
-          <path d="M90 140 C190 140 230 380 330 380 S500 140 600 140 S770 380 870 380 S1010 140 1110 140" stroke="#343a31" strokeWidth="10" strokeLinecap="round"/>
-          <motion.path d="M90 140 C190 140 230 380 330 380 S500 140 600 140 S770 380 870 380 S1010 140 1110 140" stroke="var(--grass)" strokeWidth="10" strokeLinecap="round" style={{ pathLength: path }}/>
+          <path d="M90 140C190 140 230 380 330 380S500 140 600 140 770 380 870 380 1010 140 1110 140" stroke="#33372f" strokeWidth="10" strokeLinecap="round"/>
+          <motion.path d="M90 140C190 140 230 380 330 380S500 140 600 140 770 380 870 380 1010 140 1110 140" stroke="var(--grass)" strokeWidth="10" strokeLinecap="round" style={{ pathLength }}/>
         </svg>
-        {[['1','Brief'],['2','Spec'],['3','Build'],['4','Review'],['5','Ship']].map((s,i)=><div key={s[0]} className={`station s${i}`}><b>{s[0]} · {s[1]}</b><small>{['Business goal','Architecture','AI-assisted','Test & refine','Measure impact'][i]}</small></div>)}
+        {steps.map((step, i) => <motion.div className={`station s${i}`} key={step[0]} initial={{ opacity: .2, scale: .8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * .06 }}><b>{step[0]} · {step[1]}</b><small>{step[2]}</small></motion.div>)}
       </div>
+      <div className="method-tools">{["n8n · WORKFLOWS", "MAKE.COM · SCENARIOS", "OPENAI · AGENTS", "PYTHON · DATA", "VAPI · VOICE"].map((item) => <span key={item}><i/>{item}</span>)}</div>
     </div>
   </section>;
 }
 
-function App() {
+function Work() {
+  const loop = [...projects, ...projects];
+  return <section id="work" className="work">
+    <div className="type-wall" aria-hidden="true"><span>WORK WORK WORK WORK</span><span>PROJECTS PROJECTS PROJECTS</span><span>BUILD BUILD BUILD BUILD</span></div>
+    <div className="work-label"><i/>THE WORK · 6 FEATURED BUILDS</div>
+    <div className="work-slider">
+      <div className="work-track">
+        {loop.map((project, i) => <article className="work-card" key={`${project.type}-${i}`}>
+          <WorkflowArt type={project.type}/>
+          <div className="work-card-copy"><div><h3>{project.title}</h3><p>{project.short}</p></div><span>{project.tools}</span></div>
+        </article>)}
+      </div>
+    </div>
+    <p className="work-hint">Hover to pause · swipe to explore</p>
+  </section>;
+}
+
+function Toolbox() {
+  return <section id="toolbox" className="toolbox">
+    <div className="wrap toolbox-head"><p className="eyebrow"><i/>RECOGNITION THROUGH THE WORK</p><h2>The toolbox.</h2><svg viewBox="0 0 250 18"><motion.path d="M4 10c22-13 40 8 61 0s40 8 61 0 41 8 62 0 38 7 58-1" fill="none" stroke="#2c9df4" strokeWidth="5" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}/></svg><p>I choose tools around the workflow—not the other way around. AI agents, automations, data systems, and dashboards all live in one practical stack.</p></div>
+    <div className="tool-categories wrap">{toolGroups.map((group) => <span key={group.name}><i style={{ background: group.color }}/>{group.name}</span>)}</div>
+    <div className="tool-cloud wrap">{toolGroups.flatMap((group) => group.tools.map((tool, i) => <motion.span key={tool} style={{ "--tool-color": group.color, "--tilt": `${((i % 3) - 1) * 2}deg` }} initial={{ opacity: 0, y: 35, rotate: -5 }} whileInView={{ opacity: 1, y: 0, rotate: ((i % 3) - 1) * 2 }} viewport={{ once: true }} transition={{ delay: i * .025, type: "spring" }} whileHover={{ y: -8, scale: 1.06, rotate: 0 }}><i/>{tool}</motion.span>))}</div>
+  </section>;
+}
+
+function Experience() {
+  return <section id="experience" className="experience">
+    <div className="wrap"><p className="eyebrow"><i/>EXPERIENCE</p><h2>From data and operations to intelligent CRM automation.</h2>
+      <div className="experience-stack">{experience.map((item, i) => <motion.article key={item.role} className="experience-card" style={{ "--card": item.color, "--stack-index": i }} initial={{ opacity: 0, y: 120, rotate: i % 2 ? 3 : -3 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .65, delay: i * .08, ease: [.2,.8,.2,1] }}>
+        <div><span className="experience-no">0{i + 1}</span><span className="date">{item.date}</span></div><h3>{item.role}</h3><div className="experience-meta"><p><b>{item.company}</b><small>{item.place}</small></p><p>{item.note}</p></div>
+      </motion.article>)}</div>
+    </div>
+  </section>;
+}
+
+function About() {
+  return <section id="about" className="about wrap">
+    <div><p className="eyebrow"><i/>ABOUT</p><h2>AI automation specialist based in Islamabad, building for teams anywhere.</h2></div>
+    <div className="about-list">
+      <div><p><b>AI Automation & Data Science</b><span>Independent specialist</span></p><em>ISLAMABAD · REMOTE</em></div>
+      <div><p><b>Agentic AI Developer</b><span>Bitzsol Digital</span></p><em>RAWALPINDI · HYBRID</em></div>
+      <div><p><b>AI Automation Specialist</b><span>Oraion</span></p><em>IRELAND · REMOTE</em></div>
+      <div><p><b>CRM & Operations</b><span>NSOL</span></p><em>RAWALPINDI</em></div>
+    </div>
+  </section>;
+}
+
+function Contact() {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => { await navigator.clipboard.writeText("hijefff24@gmail.com"); setCopied(true); setTimeout(() => setCopied(false), 1800); };
+  return <section id="contact" className="contact">
+    <div className="contact-inner wrap">
+      <p className="availability"><i/>OPEN TO WORK · ISLAMABAD OR REMOTE FROM ANYWHERE IN THE WORLD</p>
+      <h2>Let’s build.</h2>
+      <svg className="contact-squiggle" viewBox="0 0 280 22"><motion.path d="M5 12c30-13 48 8 76 0s49 8 77 0 46 8 74 0 26 3 43-1" fill="none" stroke="var(--grass)" strokeWidth="6" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.1 }}/></svg>
+      <div className="email-row"><a href="mailto:hijefff24@gmail.com">hijefff24@gmail.com <i/></a><button onClick={copy} aria-label="Copy email">{copied ? "Copied" : "Copy"}</button></div>
+      <div className="socials"><a href="tel:+923249146814" aria-label="Phone"><Phone/></a><a href="mailto:hijefff24@gmail.com" aria-label="Email"><Mail/></a><a href="https://linkedin.com/in/huma-imtiaz-3381a5313" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin/></a><a href="https://github.com/Huma-imtaiz" target="_blank" rel="noreferrer" aria-label="GitHub"><Github/></a></div>
+    </div>
+  </section>;
+}
+
+export default function App() {
   useEffect(() => {
-    const cursor = document.querySelector('.cursor-dot');
-    const move = e => { cursor.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; };
-    window.addEventListener('pointermove', move);
-    return () => window.removeEventListener('pointermove', move);
+    const dot = document.querySelector(".cursor-dot");
+    const move = (event) => { if (dot) dot.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`; };
+    window.addEventListener("pointermove", move);
+    return () => window.removeEventListener("pointermove", move);
   }, []);
+
   return <>
     <div className="cursor-dot"/>
     <Nav/>
     <main>
       <Hero/>
-      <Marquee/>
-      <div className="sheet">
-        <Wave/>
-        <section className="intro wrap">
-          <p className="eyebrow"><i/>AI AUTOMATION · DATA SCIENCE · PAKISTAN & REMOTE</p>
-          <motion.h2 initial={{ opacity:0, y:50 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true, amount:.5 }}>I turn repetitive work into reliable systems — connecting AI, data, and the tools your business already uses.</motion.h2>
-          <div className="cta-row"><a className="pill green" href="#work">See the work <span/></a><a className="pill" href="#contact">Start a project <span/></a></div>
-          <div className="stats">
-            {[['60%','less manual processing'],['500+','documents searchable with RAG'],['91%','churn prediction accuracy']].map((s,i)=><motion.div key={s[0]} initial={{ opacity:0,y:35 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ delay:i*.12 }}><strong>{s[0]}</strong><span>{s[1]}</span></motion.div>)}
-          </div>
-        </section>
-        <Wave fill="var(--night)"/>
-        <Method/>
-        <Wave fill="var(--cream)"/>
-        <section id="work" className="work wrap">
-          <p className="eyebrow"><i/>SELECTED WORK</p>
-          <h2>Systems built to do the work — not just demo well.</h2>
-          <div className="projects">
-            {projects.map((p,i)=><motion.article className={`project tone-${p.tone}`} key={p.title} initial={{ opacity:0,y:70 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true, margin:'-10%' }} transition={{ duration:.65 }}>
-              <div className="project-visual">
-                <span className="project-badge">{p.status}</span>
-                <div className="project-icon"><p.Icon size={38} strokeWidth={1.5}/></div>
-              </div>
-              <div className="project-copy"><small>{p.no} / PROJECT</small><h3>{p.title}</h3><p className="project-subtitle">{p.subtitle}</p><p>{p.blurb}</p><span>{p.tools}</span></div>
-            </motion.article>)}
-          </div>
-        </section>
-        <Wave fill="var(--grass)"/>
-        <section id="skills" className="skills">
-          <div className="wrap"><p className="eyebrow"><i/>CAPABILITIES</p><h2>The stack changes. The goal stays simple: make the system work.</h2>
-            <div className="skill-list">{skills.map((s,i)=><motion.div key={s[0]} initial={{ opacity:0,x:-30 }} whileInView={{ opacity:1,x:0 }} viewport={{once:true}} transition={{delay:i*.08}}><span>0{i+1}</span><h3>{s[0]}</h3><p>{s[1]}</p><ArrowDownRight/></motion.div>)}</div>
-          </div>
-        </section>
-        <Wave fill="var(--sun)"/>
-        <section className="highlights wrap">
-          <p className="eyebrow"><i/>RESULTS, NOT DEMOS</p>
-          <h2>Numbers from real client work — measured, not estimated.</h2>
-          <div className="highlight-list">
-            {highlights.map((h,i)=><motion.div className="highlight-row" key={h[1]} initial={{ opacity:0,y:24 }} whileInView={{ opacity:1,y:0 }} viewport={{once:true}} transition={{delay:i*.07}}>
-              <span>{h[0]}</span><strong>{h[1]}</strong><p>{h[2]}</p>
-            </motion.div>)}
-          </div>
-        </section>
-        <Wave fill="var(--cream)"/>
-        <section id="about" className="about wrap">
-          <div><p className="eyebrow"><i/>ABOUT HUMA</p><h2>Technical enough to build it. Business-minded enough to build the right thing.</h2></div>
-          <div className="about-copy"><p>I’m Huma Imtiaz, an AI Automation Specialist and Data Science Engineer. I design AI-powered applications, workflow automations, voice agents, data pipelines, machine learning solutions, and business intelligence dashboards.</p><p>I start with the process and the operational gap, then choose the right tools. The result is practical, maintainable technology with measurable business value.</p><a href="mailto:hijefff24@gmail.com">Let’s work together <ArrowUpRight/></a></div>
-        </section>
-        <section className="experience wrap"><p className="eyebrow"><i/>EXPERIENCE</p>{experience.map(e=><div className="experience-row" key={e[1]}><span>{e[0]}</span><div><h3>{e[1]}</h3><b>{e[2]}</b></div><p>{e[3]}</p></div>)}</section>
-        <Wave fill="var(--night)"/>
-        <section id="contact" className="contact">
-          <div className="wrap"><p className="eyebrow light"><i/>LET’S TALK</p><h2>Have a process that should run smarter?</h2><a className="big-email" href="mailto:hijefff24@gmail.com">hijefff24@gmail.com <ArrowUpRight/></a>
-            <div className="contact-bottom"><p>Available for full-time roles, freelance automation builds, AI systems, and data projects.</p><div className="socials"><a href="tel:+923249146814" aria-label="Phone"><Phone/></a><a href="mailto:hijefff24@gmail.com" aria-label="Email"><Mail/></a><a href="https://linkedin.com/in/huma-imtiaz-3381a5313" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin/></a><a href="https://github.com/Huma-imtaiz" target="_blank" rel="noreferrer" aria-label="GitHub"><Github/></a></div></div>
-          </div>
-        </section>
-      </div>
+      <div className="sheet"><Wave/><Intro/><Wave fill="var(--night)"/><Method/><Wave fill="var(--cream)"/><Work/><Wave fill="var(--cream)"/><Toolbox/><Wave fill="var(--grass)"/><Experience/><Wave fill="var(--cream)"/><About/><Wave fill="var(--night)"/><Contact/></div>
     </main>
-    <footer><Wave fill="var(--sun)"/><div className="footer-inner wrap"><b><i/>Huma Imtiaz</b><nav><a href="#work">Work</a><a href="#method">Method</a><a href="#about">About</a></nav><small>© 2026 Huma Imtiaz · Pakistan</small></div></footer>
   </>;
 }
-
-export default App;
