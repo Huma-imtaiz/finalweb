@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, Phone, X } from "lucide-react";
 
 const projects = [
@@ -145,21 +145,11 @@ function WorkflowArt({ type }) {
 }
 
 function Hero() {
-  const { scrollYProgress } = useScroll();
-  const rotation = useSpring(useTransform(scrollYProgress, [0, .18], [0, 105]), { stiffness: 65, damping: 20 });
-  const deck = [...projects, ...projects];
   return <section id="top" className="hero">
     <div className="hero-copy">
       <div className="hero-name-mask"><motion.h1 initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ duration: .9, ease: [.2,.8,.2,1] }}>HUMA IMTIAZ</motion.h1></div>
       <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .52 }}>AI automation specialist & data science engineer</motion.p>
       <motion.small initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .72 }}>Intelligent systems that move business forward</motion.small>
-    </div>
-    <div className="hero-deck" aria-hidden="true">
-      <motion.div className="hero-ring" style={{ rotate: rotation }}>
-        {deck.map((project, i) => <div className="hero-card" style={{ "--a": `${i * (360 / deck.length)}deg`, "--card-color": project.color }} key={`${project.type}-${i}`}>
-          <WorkflowArt type={project.type}/>
-        </div>)}
-      </motion.div>
     </div>
     <span className="scroll-cue">Scroll to explore <i/></span>
   </section>;
@@ -219,24 +209,28 @@ function Method() {
 }
 
 function Work() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const workX = useTransform(scrollYProgress, [0, 1], ["-4%", "-24%"]);
-  const projectsX = useTransform(scrollYProgress, [0, 1], ["-28%", "-5%"]);
-  const buildX = useTransform(scrollYProgress, [0, 1], ["-8%", "-34%"]);
-  const loop = [...projects, ...projects];
-  return <section id="work" className="work" ref={ref}>
-    <div className="type-wall" aria-hidden="true"><motion.span style={{ x: workX }}>WORK WORK WORK WORK</motion.span><motion.span style={{ x: projectsX }}>PROJECTS PROJECTS PROJECTS</motion.span><motion.span style={{ x: buildX }}>BUILD BUILD BUILD BUILD</motion.span></div>
+  const trackX = useMotionValue(0);
+  const smoothX = useSpring(trackX, { stiffness: 90, damping: 24, mass: .7 });
+  const moveProjects = (event) => {
+    if (event.pointerType && event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const position = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+    const estimatedTrackWidth = projects.length * 386;
+    const travel = Math.max(0, estimatedTrackWidth - bounds.width + 120);
+    trackX.set(-position * travel);
+  };
+  return <section id="work" className="work" onPointerMove={moveProjects}>
+    <div className="type-wall" aria-hidden="true"><span>WORK WORK WORK WORK</span><span>PROJECTS PROJECTS PROJECTS</span><span>BUILD BUILD BUILD BUILD</span></div>
     <div className="work-label"><i/>THE WORK · 6 FEATURED BUILDS</div>
     <div className="work-slider">
-      <div className="work-track">
-        {loop.map((project, i) => <article className="work-card" style={{ "--project": project.color }} key={`${project.type}-${i}`}>
+      <motion.div className="work-track" style={{ x: smoothX }} drag="x" dragConstraints={{ left: -1500, right: 0 }} dragElastic={.08}>
+        {projects.map((project) => <article className="work-card" style={{ "--project": project.color }} key={project.type}>
           <WorkflowArt type={project.type}/>
           <div className="work-card-copy"><div><h3>{project.title}</h3><p>{project.short}</p></div><span>{project.tools}</span></div>
         </article>)}
-      </div>
+      </motion.div>
     </div>
-    <p className="work-hint">Hover to pause · swipe to explore</p>
+    <p className="work-hint">Move your cursor · drag or swipe to explore</p>
   </section>;
 }
 

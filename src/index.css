@@ -54,3 +54,20 @@ a{color:inherit}.wrap{width:min(1240px,calc(100% - 48px));margin-inline:auto}.wa
 @media(max-width:800px){.method h2{font-size:2.85rem}.work{min-height:640px;padding:78px 0 90px}.type-wall{font-size:6rem}.work-label{font-size:10px;margin-bottom:34px}.work-card{width:78vw}.work-card .workflow-art{height:155px}.work-card-copy{min-height:145px}.work-card h3{font-size:17px}.toolbox{min-height:0}.tool-categories{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px}.tool-cloud{margin-top:45px}.tool-cloud span{font-size:13px;padding:10px 13px}}
 @media(prefers-reduced-motion:reduce){.toolbox:before{animation:none}.type-wall>span,.station-pill{transform:none!important}.station-pill{opacity:1!important}}
 @media(max-width:800px){.station-pill{padding:15px;text-align:left}}
+
+/* Hero without orbiting cards */
+.hero:before,.hero:after{content:'';position:absolute;pointer-events:none;border-radius:50%}
+.hero:before{width:min(62vw,820px);aspect-ratio:1;border:1px solid #22320f22;box-shadow:0 0 0 80px #fff00008,0 0 0 160px #fff00008;animation:heroFloat 9s ease-in-out infinite}
+.hero:after{width:clamp(170px,18vw,290px);aspect-ratio:1;background:radial-gradient(circle at 35% 35%,#fff6,transparent 55%);right:7vw;bottom:9vh;filter:blur(3px);animation:heroFloat 7s ease-in-out infinite reverse}
+@keyframes heroFloat{50%{transform:translateY(-18px) scale(1.025)}}
+
+/* Background type flows; foreground work follows pointer/drag */
+.type-wall>span:nth-child(1){animation:backFlowLeft 18s linear infinite}
+.type-wall>span:nth-child(2){animation:backFlowRight 22s linear infinite}
+.type-wall>span:nth-child(3){animation:backFlowLeft 20s linear infinite reverse}
+@keyframes backFlowLeft{from{transform:translateX(-3%)}to{transform:translateX(-28%)}}
+@keyframes backFlowRight{from{transform:translateX(-30%)}to{transform:translateX(-5%)}}
+.work-track{animation:none!important;cursor:grab;touch-action:pan-y;user-select:none;padding-right:120px}
+.work-track:active{cursor:grabbing}
+.work-slider:hover .work-track{animation-play-state:running}
+@media(prefers-reduced-motion:reduce){.hero:before,.hero:after,.type-wall>span{animation:none!important}}
