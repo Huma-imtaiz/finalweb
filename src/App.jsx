@@ -1,48 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, Phone, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Github, Linkedin, Lock, Mail, Menu, Phone, X } from "lucide-react";
 
 const projects = [
   {
-    title: "HR AI Job Posting & Evaluation",
-    short: "Scores candidates against the role, shortlists the best fits, and schedules screening interviews.",
-    tools: "n8n · Airtable · AI scoring · Calendar",
-    type: "hr",
+    title: "AI Ops Approval & Reporting Bot",
+    short: "A Telegram-native assistant that classifies incoming requests, auto-approves the clear-cut ones and escalates the rest to a manager, calculates leave balances on demand, and emails a GPT-written summary every month.",
+    tools: "Telegram · n8n · OpenAI · Sheets · Gmail",
+    image: "/work/ops-approval-bot.jpg",
     color: "#f57962",
   },
   {
-    title: "Client Onboarding on Make.com",
-    short: "Turns one form into a brief, Drive workspace, Trello board, Slack alert, email, and kickoff call.",
-    tools: "Make.com · Drive · Trello · Slack",
-    type: "make",
-    color: "#9dcced",
-  },
-  {
-    title: "AI Lead Capture & Follow-Up",
-    short: "Creates the CRM contact, writes a personalized response with Gemini, and alerts sales instantly.",
-    tools: "n8n · Gemini · Airtable · Gmail",
-    type: "lead",
+    title: "AI-Powered Lead Capture & Follow-Up",
+    short: "A webhook intake validates and scores every lead with OpenAI, routes hot, warm, and cold prospects into HubSpot, fires a personalized sales email, alerts the team on Slack, and logs the full trail to Sheets.",
+    tools: "n8n · OpenAI · HubSpot · Slack · Sheets",
+    image: "/work/lead-qualification.jpg",
     color: "#b9dc52",
   },
   {
-    title: "AI Client Onboarding System",
-    short: "Two AI agents send a tailored welcome email and log every client detail in parallel.",
-    tools: "n8n · OpenAI · Gmail · Sheets",
-    type: "onboarding",
-    color: "#f5c948",
-  },
-  {
     title: "RAG Knowledge Assistant",
-    short: "Lets teams search and question 500+ internal documents using grounded natural-language answers.",
+    short: "Lets teams search and question 500+ internal documents using grounded natural-language answers. Built for a client's internal knowledge base — the interface can't be displayed here, as it's covered under an NDA.",
     tools: "LangChain · OpenAI · Pinecone · Python",
-    type: "rag",
     color: "#cdb9e7",
   },
   {
     title: "Customer Churn Intelligence",
-    short: "A 91%-accuracy XGBoost model and Tableau dashboard built on 100K+ telecom records.",
-    tools: "Python · XGBoost · Pandas · Tableau",
-    type: "data",
+    short: "An AI-powered customer risk and retention platform built on a LightGBM model (84% ROC-AUC). One interactive workspace covers risk scoring, model performance, threshold tuning, and explainability.",
+    tools: "Python · LightGBM · Pandas · React",
+    image: "/work/churn-intelligence.jpg",
     color: "#7cc9bd",
   },
 ];
@@ -118,32 +103,6 @@ function Nav() {
   </header>;
 }
 
-function WorkflowArt({ type }) {
-  const maps = {
-    hr: ["Form", "CV", "AI score", "Shortlist", "Calendar"],
-    make: ["Form", "Brief", "Drive", "Trello", "Slack", "Meet"],
-    lead: ["Sheets", "Airtable", "Gemini", "Parse", "Gmail"],
-    onboarding: ["Form", "AI Agent", "OpenAI", "Gmail", "Sheets"],
-    rag: ["Docs", "Chunk", "Vector DB", "LLM", "Answer"],
-    data: ["100K rows", "Clean", "XGBoost", "91%", "Tableau"],
-  };
-  const labels = maps[type];
-  return <div className={`workflow-art art-${type}`}>
-    <div className="art-toolbar"><span/><span/><span/><em>{type === "make" ? "MAKE.COM SCENARIO" : "N8N WORKFLOW"}</em></div>
-    <div className="art-grid"/>
-    <div className="art-nodes">
-      {labels.map((label, i) => <React.Fragment key={label}>
-        <motion.div className="art-node" initial={{ scale: .6, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * .06 }}>
-          <b>{label.slice(0, 1)}</b><small>{label}</small>
-        </motion.div>
-        {i < labels.length - 1 && (
-          <motion.i initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: .05 + i * .06 }}/>
-        )}
-      </React.Fragment>)}
-    </div>
-  </div>;
-}
-
 function Hero() {
   return <section id="top" className="hero">
     <div className="hero-copy">
@@ -208,29 +167,47 @@ function Method() {
   </section>;
 }
 
-function Work() {
-  const trackX = useMotionValue(0);
-  const smoothX = useSpring(trackX, { stiffness: 90, damping: 24, mass: .7 });
-  const moveProjects = (event) => {
-    if (event.pointerType && event.pointerType !== "mouse") return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const position = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
-    const estimatedTrackWidth = projects.length * 386;
-    const travel = Math.max(0, estimatedTrackWidth - bounds.width + 120);
-    trackX.set(-position * travel);
-  };
-  return <section id="work" className="work" onPointerMove={moveProjects}>
-    <div className="type-wall" aria-hidden="true"><span>WORK WORK WORK WORK</span><span>PROJECTS PROJECTS PROJECTS</span><span>BUILD BUILD BUILD BUILD</span></div>
-    <div className="work-label"><i/>THE WORK · 6 FEATURED BUILDS</div>
-    <div className="work-slider">
-      <motion.div className="work-track" style={{ x: smoothX }} drag="x" dragConstraints={{ left: -1500, right: 0 }} dragElastic={.08}>
-        {projects.map((project) => <article className="work-card" style={{ "--project": project.color }} key={project.type}>
-          <WorkflowArt type={project.type}/>
-          <div className="work-card-copy"><div><h3>{project.title}</h3><p>{project.short}</p></div><span>{project.tools}</span></div>
-        </article>)}
-      </motion.div>
+function WorkCard({ project }) {
+  return <article className="work-card" style={{ "--project": project.color }}>
+    <div className="work-card-media">
+      {project.image ? <img src={project.image} alt={project.title} loading="lazy"/> : (
+        <div className="work-card-nda"><Lock size={26}/><b>CAN'T DISPLAY</b><small>DUE TO NDA</small></div>
+      )}
     </div>
-    <p className="work-hint">Move your cursor · drag or swipe to explore</p>
+    <div className="work-card-copy"><div><h3>{project.title}</h3><p>{project.short}</p></div><span>{project.tools}</span></div>
+  </article>;
+}
+
+function Work() {
+  const sliderRef = useRef(null);
+  const trackRef = useRef(null);
+  const trackX = useMotionValue(0);
+  const smoothX = useSpring(trackX, { stiffness: 170, damping: 28, mass: .6 });
+
+  const paginate = (dir) => {
+    const slider = sliderRef.current;
+    const track = trackRef.current;
+    if (!slider || !track) return;
+    const firstCard = track.children[0];
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 18;
+    const amount = (firstCard?.getBoundingClientRect().width || 380) + gap;
+    const maxScroll = Math.max(0, track.scrollWidth - slider.clientWidth);
+    trackX.set(Math.min(0, Math.max(-maxScroll, trackX.get() - dir * amount)));
+  };
+
+  return <section id="work" className="work">
+    <div className="type-wall" aria-hidden="true"><span>WORK WORK WORK WORK</span><span>PROJECTS PROJECTS PROJECTS</span><span>BUILD BUILD BUILD BUILD</span></div>
+    <div className="work-label"><i/>THE WORK · {projects.length} FEATURED BUILDS</div>
+    <div className="work-row">
+      <button className="work-nav prev" onClick={() => paginate(-1)} aria-label="Previous project"><ChevronLeft/></button>
+      <div className="work-slider" ref={sliderRef}>
+        <motion.div className="work-track" ref={trackRef} style={{ x: smoothX }} drag="x" dragConstraints={sliderRef} dragElastic={.08}>
+          {projects.map((project) => <WorkCard project={project} key={project.title}/>)}
+        </motion.div>
+      </div>
+      <button className="work-nav next" onClick={() => paginate(1)} aria-label="Next project"><ChevronRight/></button>
+    </div>
+    <p className="work-hint">Drag, swipe, or use the arrows to explore</p>
   </section>;
 }
 
